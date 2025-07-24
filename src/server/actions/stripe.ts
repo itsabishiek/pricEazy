@@ -1,7 +1,7 @@
 "use server";
 
 import { PaidTierNames, subscriptionTiers } from "@/data/subscriptionTiers";
-import { currentUser, User } from "@clerk/nextjs/server";
+import { auth, currentUser, User } from "@clerk/nextjs/server";
 import { getUserSubscription } from "../db/subscription";
 import { Stripe } from "stripe";
 import { env } from "@/data/env/server";
@@ -9,6 +9,21 @@ import { env as clientEnv } from "@/data/env/client";
 import { redirect } from "next/navigation";
 
 const stripe = new Stripe(env.STRIPE_SECRET_KEY);
+
+export async function createCustomerPortalSession() {
+  const { userId } = await auth();
+  if (userId == null) return { error: true };
+
+  const subscription = await getUserSubscription(userId);
+  if (subscription?.stripeCustomerId == null) return { error: true };
+
+  const portalSession = await stripe.billingPortal.sessions.create({
+    customer: subscription.stripeCustomerId,
+    return_url: `${clientEnv.NEXT_PUBLIC_SERVER_URL}/dashboard/subscription`,
+  });
+
+  redirect(portalSession.url);
+}
 
 export async function createCancelSession() {
   const user = await currentUser();

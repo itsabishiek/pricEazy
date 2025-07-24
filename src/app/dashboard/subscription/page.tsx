@@ -13,6 +13,7 @@ import {
   subscriptionTiersInOrder,
 } from "@/data/subscriptionTiers";
 import { formatToCompactNumber } from "@/lib/formatters";
+import { createCustomerPortalSession } from "@/server/actions/stripe";
 import { getProductCount } from "@/server/db/products";
 import { getUserSubscriptionTier } from "@/server/db/subscription";
 import { auth } from "@clerk/nextjs/server";
@@ -26,6 +27,12 @@ const SubscriptionPage: React.FC<SubscriptionPageProps> = async () => {
 
   const tier = await getUserSubscriptionTier(userId);
   const productCount = await getProductCount(userId);
+
+  const handleCreateCustomerPortal = async () => {
+    "use server";
+
+    await createCustomerPortalSession();
+  };
 
   return (
     <>
@@ -72,7 +79,7 @@ const SubscriptionPage: React.FC<SubscriptionPageProps> = async () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form action="">
+              <form action={handleCreateCustomerPortal}>
                 <Button>Manage Subscription</Button>
               </form>
             </CardContent>

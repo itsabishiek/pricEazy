@@ -39,8 +39,8 @@ export const SidebarContents = () => {
               : "bg-transparent hover:bg-secondary"
           }`}
         >
-          <LayoutPanelLeft />
-          <h3 className="font-semibold text-lg">Dashboard</h3>
+          <LayoutPanelLeft size={20} />
+          <h3 className="font-semibold text-base">Dashboard</h3>
         </Link>
         <Link
           href="/dashboard/products"
@@ -50,8 +50,8 @@ export const SidebarContents = () => {
               : "bg-transparent hover:bg-secondary"
           }`}
         >
-          <Zap />
-          <h3 className="font-semibold text-lg">Products</h3>
+          <Zap size={20} />
+          <h3 className="font-semibold text-base">Products</h3>
         </Link>
         <Link
           href="/dashboard/analytics"
@@ -61,8 +61,8 @@ export const SidebarContents = () => {
               : "bg-transparent hover:bg-secondary"
           }`}
         >
-          <ChartNoAxesCombined />
-          <h3 className="font-semibold text-lg">Analytics</h3>
+          <ChartNoAxesCombined size={20} />
+          <h3 className="font-semibold text-base">Analytics</h3>
         </Link>
         <Link
           href="/dashboard/subscription"
@@ -72,8 +72,8 @@ export const SidebarContents = () => {
               : "bg-transparent hover:bg-secondary"
           }`}
         >
-          <Landmark />
-          <h3 className="font-semibold text-lg">Subscription</h3>
+          <Landmark size={20} />
+          <h3 className="font-semibold text-base">Subscription</h3>
         </Link>
       </div>
 
@@ -93,7 +93,7 @@ export const SidebarContents = () => {
         )}
 
         <div className="w-full flex flex-col">
-          <h3 className="font-semibold">{user?.fullName}</h3>
+          <h3 className="font-semibold text-base">{user?.fullName}</h3>
           <p className="text-gray-400 text-xs">
             {user?.emailAddresses[0]?.emailAddress?.length! > 25
               ? `${user?.emailAddresses[0]?.emailAddress.slice(0, 25)}...`

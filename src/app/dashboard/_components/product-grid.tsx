@@ -66,7 +66,7 @@ const ProductCard = ({
               <Dialog>
                 <AlertDialog>
                   <DropdownMenu>
-                    <DropdownMenuTrigger>
+                    <DropdownMenuTrigger asChild>
                       <Button variant="outline" className="size-8 p-0">
                         <div className="sr-only">Action Menu</div>
                         <Ellipsis className="size-4" />

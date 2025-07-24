@@ -35,7 +35,7 @@ const Navbar: React.FC<NavbarProps> = () => {
 
           <Sheet open={open} onOpenChange={() => setOpen(true)}>
             <div className="flex md:hidden">
-              <SheetTrigger>
+              <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
                   <Menu />
                 </Button>
