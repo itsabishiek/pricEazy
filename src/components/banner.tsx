@@ -33,6 +33,8 @@ const Banner: React.FC<BannerProps> = ({
     message.replace(/'/g, "&#39;")
   );
 
+  console.log("mess", mappedMessage);
+
   return (
     <>
       <style type="text/css">
