@@ -23,7 +23,7 @@ export async function getProductViewCountInternal(
   const counts = await db
     .select({ pricingViewCount: count() })
     .from(ProductViewTable)
-    .innerJoin(ProductTable, eq(ProductTable.id, ProductViewTable.id))
+    .innerJoin(ProductTable, eq(ProductTable.id, ProductViewTable.productId))
     .where(
       and(
         eq(ProductTable.clerkUserId, userId),

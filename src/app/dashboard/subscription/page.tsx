@@ -15,8 +15,10 @@ import {
 import { formatToCompactNumber } from "@/lib/formatters";
 import { createCustomerPortalSession } from "@/server/actions/stripe";
 import { getProductCount } from "@/server/db/products";
+import { getProductViewCount } from "@/server/db/productViews";
 import { getUserSubscriptionTier } from "@/server/db/subscription";
 import { auth } from "@clerk/nextjs/server";
+import { startOfMonth } from "date-fns";
 import React from "react";
 
 type SubscriptionPageProps = {};
@@ -27,6 +29,10 @@ const SubscriptionPage: React.FC<SubscriptionPageProps> = async () => {
 
   const tier = await getUserSubscriptionTier(userId);
   const productCount = await getProductCount(userId);
+  const pricingViewCount = await getProductViewCount(
+    userId,
+    startOfMonth(new Date())
+  );
 
   const handleCreateCustomerPortal = async () => {
     "use server";
@@ -43,12 +49,16 @@ const SubscriptionPage: React.FC<SubscriptionPageProps> = async () => {
             <CardHeader>
               <CardTitle className="text-lg">Monthly Usage</CardTitle>
               <CardDescription>
-                0 / {formatToCompactNumber(tier.maxNumberOfVisits)} pricing page
+                {formatToCompactNumber(pricingViewCount)} /{" "}
+                {formatToCompactNumber(tier.maxNumberOfVisits)} pricing page
                 visits this month
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Progress className="h-3" />
+              <Progress
+                value={(pricingViewCount / tier.maxNumberOfVisits) * 100}
+                className="h-3"
+              />
             </CardContent>
           </Card>
           <Card className="dark:border-input">

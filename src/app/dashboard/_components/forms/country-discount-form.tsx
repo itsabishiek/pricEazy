@@ -52,8 +52,7 @@ const CountryDiscountForm: React.FC<CountryDiscountFormProps> = ({
 
         return {
           countryGroupId: countryGroup.id,
-          discountPercentage:
-            discount != null && discount != 0 ? discount : undefined,
+          discountPercentage: discount != null ? discount : undefined,
           coupon: countryGroup.discount?.coupon ?? "",
         };
       }),
@@ -130,10 +129,10 @@ const CountryDiscountForm: React.FC<CountryDiscountFormProps> = ({
                             className="w-24"
                             type="number"
                             value={field.value ?? ""}
-                            min="0"
+                            // min="0"
                             max="100"
                             onChange={(e) =>
-                              field.onChange(e.target.valueAsNumber)
+                              field.onChange(e.target.valueAsNumber ?? 0)
                             }
                           />
                         </FormControl>

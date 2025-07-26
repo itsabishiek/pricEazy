@@ -18,7 +18,7 @@ export const productCountryDiscountSchema = z.object({
         countryGroupId: z.string().min(1, "Required"),
         discountPercentage: z
           .number()
-          .min(1)
+          // .min(1)
           .max(100)
           .or(z.nan())
           .transform((n) => (isNaN(n) ? undefined : n))

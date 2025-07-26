@@ -93,7 +93,7 @@ async function getJavaScript(
             mappings: {
               country: country.name,
               coupon: discount.coupon,
-              discount: (discount.percentage * 100).toString(),
+              discount: discount.percentage.toString(),
             },
             customization: product.customization,
             canRemoveBranding: canRemoveBranding,
