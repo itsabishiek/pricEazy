@@ -8,6 +8,8 @@ import { notFound } from "next/navigation";
 import { NextRequest } from "next/server";
 import { createElement } from "react";
 
+export const runtime = "edge";
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ productId: string }> }
