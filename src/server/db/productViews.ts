@@ -306,9 +306,9 @@ export const CHART_INTERVALS = {
   last365Days: {
     label: "Last 365 Days",
     startDate: subDays(new Date(), 365),
-    sql: sql`GENERATE_SERIES(DATE_TRUNC("month", current_date - 365), DATE_TRUNC("month", current_date), '1 month'::interval) AS series`,
+    sql: sql`GENERATE_SERIES(DATE_TRUNC('month', current_date - 365), DATE_TRUNC('month', current_date), '1 month'::interval) AS series`,
     dateGrouper: (col: SQL | SQL.Aliased) =>
-      sql<string>`DATE_TRUNC("month", ${col})`.inlineParams(),
+      sql<string>`DATE_TRUNC('month', ${col})`.inlineParams(),
     dateFormatter: (date: Date) => monthFormatter.format(date),
   },
 };
