@@ -3,10 +3,17 @@ import { auth } from "@clerk/nextjs/server";
 import React from "react";
 import NoProducts from "./_components/no-products";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
 import ProductGrid from "./_components/product-grid";
-import { canCreateProduct } from "@/server/permissions";
+import HasPermission from "@/components/has-permission";
+import { canAccessAnalytics } from "@/server/permissions";
+import {
+  CHART_INTERVALS,
+  getViewsByDayChartData,
+} from "@/server/db/productViews";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ViewsByDayChart from "./_components/charts/views-by-day-chart";
 
 type DashboardPageProps = {};
 
@@ -15,7 +22,6 @@ const DashboardPage: React.FC<DashboardPageProps> = async () => {
   if (userId === null) return redirectToSignIn();
 
   const products = await getProducts(userId, { limit: 6 });
-  const canAddProduct = await canCreateProduct(userId);
 
   return (
     <div className="">
@@ -38,7 +44,43 @@ const DashboardPage: React.FC<DashboardPageProps> = async () => {
           <ProductGrid products={products} />
         </div>
       )}
+
+      <div className="flex items-center justify-between mt-8">
+        <h1 className="text-2xl font-semibold">Analytics</h1>
+        <Link
+          href="/dashboard/analytics"
+          className="group flex items-center gap-2"
+        >
+          <span className="hidden md:block group-hover:text-primary">
+            View more
+          </span>
+          <ArrowRight size={20} className="group-hover:text-primary" />
+        </Link>
+      </div>
+
+      <HasPermission permission={canAccessAnalytics} renderFallback>
+        <AnalyticsCharts userId={userId} />
+      </HasPermission>
     </div>
   );
 };
 export default DashboardPage;
+
+async function AnalyticsCharts({ userId }: { userId: string }) {
+  const chartData = await getViewsByDayChartData({
+    userId,
+    interval: CHART_INTERVALS.last7Days,
+    timezone: "UTC",
+  });
+
+  return (
+    <Card className="mt-5 dark:border-none">
+      <CardHeader>
+        <CardTitle>Views by Day</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ViewsByDayChart chartData={chartData} />
+      </CardContent>
+    </Card>
+  );
+}

@@ -26,7 +26,9 @@ const Navbar: React.FC<NavbarProps> = () => {
 
         <div className="flex items-center gap-3">
           <SignedIn>
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/dashboard" className="mr-4 font-semibold">
+              Dashboard
+            </Link>
             <UserButton />
           </SignedIn>
           <SignedOut>
