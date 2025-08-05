@@ -76,7 +76,7 @@ async function AnalyticsCharts({ userId }: { userId: string }) {
   return (
     <Card className="mt-5 dark:border-none">
       <CardHeader>
-        <CardTitle>Views by Day</CardTitle>
+        <CardTitle className="text-lg">Views by Day</CardTitle>
       </CardHeader>
       <CardContent>
         <ViewsByDayChart chartData={chartData} />

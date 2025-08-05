@@ -17,7 +17,7 @@ type AddToSiteDialogContentProps = {
   productId: string;
 };
 
-type CopyState = "idle" | "copied" | "error";
+export type CopyState = "idle" | "copied" | "error";
 
 const AddToSiteDialogContent: React.FC<AddToSiteDialogContentProps> = ({
   productId,
@@ -74,7 +74,7 @@ const AddToSiteDialogContent: React.FC<AddToSiteDialogContentProps> = ({
 
 export default AddToSiteDialogContent;
 
-function getCopyIcon(copyState: CopyState) {
+export function getCopyIcon(copyState: CopyState) {
   switch (copyState) {
     case "idle":
       return CopyIcon;
@@ -85,7 +85,7 @@ function getCopyIcon(copyState: CopyState) {
   }
 }
 
-function getCopyText(copyState: CopyState) {
+export function getCopyText(copyState: CopyState) {
   switch (copyState) {
     case "idle":
       return "Copy Code";
